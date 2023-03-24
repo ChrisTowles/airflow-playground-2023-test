@@ -1,0 +1,8 @@
+# Not used yet, will be used in the future
+
+asyncio==3.4.3
+aiohttp==3.8.3
+#setuptools
+wheel==0.38.4
+minio==7.1.12
+pandas==1.5.1
