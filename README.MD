@@ -15,11 +15,36 @@ This is a playground for Apache Airflow. The goal is to get more deep understand
 - [ ] Create a DAG that reads table in Postgres and outputs to S3
 
 
-## Setup
+## Pre-requisites
+
+### Docker
 
 - [Docker on Ubuntu](https://docs.docker.com/engine/install/ubuntu/)
   - https://docs.docker.com/engine/install/linux-postinstall/#manage-docker-as-a-non-root-user
 
+
+### Python
+
+```bash
+pyenv install 3.10
+
+pyenv virtualenv 3.10 airflow-playground
+
+pyenv local airflow-playground
+
+pyenv activate airflow-playground
+
+```
+
+```bash
+pip install -r requirements/requirements-local.txt
+```
+
+
+Configure VS code with `Pathon: Select Interpreter` and chose `airflow-playground`. 
+
+
+## Setup
 
 ```bash
 docker compose up
@@ -42,3 +67,5 @@ password: airflow
   - https://towardsdatascience.com/end-python-dependency-hell-with-pip-compile-multi-56eea0c55ffe
 - Datasets in airflow
   - https://airflow.apache.org/docs/apache-airflow/2.5.2/authoring-and-scheduling/datasets.html
+- Manning book Data Pipelines with Apache Airflow. 
+  - [Examples](https://github.com/BasPH/data-pipelines-with-apache-airflow)

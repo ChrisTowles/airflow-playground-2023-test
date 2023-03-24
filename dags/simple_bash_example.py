@@ -21,7 +21,7 @@ with DAG(
 ) as dag:
 
     
-    run_this = BashOperator(
+    run_this: BashOperator = BashOperator(
         task_id="run_this_1",
         bash_command="echo 1",
     )

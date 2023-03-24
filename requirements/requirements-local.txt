@@ -1,0 +1,5 @@
+# local development only
+
+cmake==3.26.1 # needed by airflow
+apache-airflow==2.5.2
+

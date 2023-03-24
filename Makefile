@@ -1,3 +1,5 @@
+# run `make` to see the list of available commands
+#
 ## TODO: make this a bash or python script
 
 down:
@@ -5,9 +7,6 @@ down:
 
 run:
 	make down && (rm dags/.airflowignores || true) && docker compose up
-
-down-celery:
-	docker compose down -f docker-compose.feat23.celery.yml --volumes && (rm dags/.airflowignore || true)
 
 stop:
 	docker compose stop
