@@ -26,9 +26,9 @@ This is a playground for Apache Airflow. The goal is to get more deep understand
 ### Python
 
 ```bash
-pyenv install 3.10
+pyenv install 3.10.6
 
-pyenv virtualenv 3.10 airflow-playground
+pyenv virtualenv 3.10.6 airflow-playground
 
 pyenv local airflow-playground
 
@@ -41,7 +41,7 @@ pip install -r requirements/requirements-local.txt
 ```
 
 
-Configure VS code with `Pathon: Select Interpreter` and chose `airflow-playground`. 
+Configure VS code with `Python: Select Interpreter` and chose `airflow-playground`. 
 
 
 ## Setup
