@@ -1,13 +1,20 @@
 version: '3.8'
 
 
+# Full Example - https://airflow.apache.org/docs/apache-airflow/stable/docker-compose.yaml
+
+
 # ====================================== AIRFLOW environment VARIABLES =======================================
 x-environment: &airflow_environment
   AIRFLOW__CORE__EXECUTOR: LocalExecutor
   AIRFLOW__CORE__LOAD_DEFAULT_CONNECTIONS: 'false'
   AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
+  AIRFLOW__CORE__FERNET_KEY: 'RWoGg8pFVgzWXkdYm2qymU_HZAoAT8Bk2cBQNFNhxcA=' # this is a dummy key, you should generate your own  with
+  # python -c "from cryptography.fernet import Fernet; print(Fernet.generate_key().decode())"
   AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: postgresql+psycopg2://airflow:airflow@postgres:5432/airflow
   AIRFLOW__WEBSERVER__EXPOSE_CONFIG: 'true'
+  AIRFLOW__LOGGING__LOGGING_LEVEL: 'INFO'
+
   USE_SMALL_API: 'true'
   BATCH_SIZE: 40000
   BATCH_SIZE_SMALL: 5000
@@ -50,6 +57,7 @@ services:
       - |
         airflow db init
         airflow users create --username airflow --password airflow --firstname firstname --lastname lastname --role Admin --email admin@example.org
+        airflow connections delete 'dev_db'
         airflow connections add 'dev_db' \
             --conn-type 'postgres' \
             --conn-login 'airflow' \
@@ -57,6 +65,18 @@ services:
             --conn-host 'postgres' \
             --conn-port '5432' \
             --conn-schema 'airflow'
+        airflow connections delete 'dev_s3'
+        airflow connections add 'dev_s3' \
+            --conn-json '{
+                "conn_type": "aws",
+                "extra": { 
+                  "aws_access_key_id": "user", 
+                  "aws_secret_access_key": "password",
+                  "endpoint_url": "http://locals3:9000", 
+                  "region_name": "us-east-1"
+                }
+            }'
+
     # tty: true # for debugging purposes
 
   webserver:
@@ -71,7 +91,7 @@ services:
       retries: 5
     restart: unless-stopped
     volumes:
-      - logs:/opt/airflow/logs
+      - ./airflow-logs:/opt/airflow/logs
     ports:
       - "8080:8080"
     environment: *airflow_environment
@@ -99,7 +119,8 @@ services:
         condition: service_completed_successfully
     volumes:
       - ./dags:/opt/airflow/dags
-      - logs:/opt/airflow/logs
+      #- logs:/opt/airflow/logs
+      - ./airflow-logs:/opt/airflow/logs
     environment: *airflow_environment
     command: scheduler
 

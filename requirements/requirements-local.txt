@@ -2,4 +2,9 @@
 
 cmake==3.26.1 # needed by airflow
 apache-airflow==2.5.2
+apache-airflow-providers-amazon==7.3.0
+apache-airflow-providers-postgres==5.4.0
+
+
+
 

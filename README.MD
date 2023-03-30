@@ -69,3 +69,35 @@ password: airflow
   - https://airflow.apache.org/docs/apache-airflow/2.5.2/authoring-and-scheduling/datasets.html
 - Manning book Data Pipelines with Apache Airflow. 
   - [Examples](https://github.com/BasPH/data-pipelines-with-apache-airflow)
+
+# Minio Configure
+
+test using aws cli against minio https://min.io/docs/minio/linux/integrations/aws-cli-with-minio.html
+
+Setup AWS CLI profile for minio.
+
+```bash
+aws configure --profile locals3
+
+# answers
+AWS Access Key ID [None]: user
+AWS Secret Access Key [None]: password
+Default region name [None]: us-east-1
+Default output format [None]: ENTER
+
+# ... 
+
+#set signature version
+aws configure set default.s3.signature_version s3v4 --profile locals3
+
+#list buckets
+aws --profile locals3 --endpoint-url http://localhost:9000 s3 ls 
+
+# Note the IP may and is differnt from inside the docker containsers
+aws --profile locals3 --endpoint-url http://172.18.0.2:9000 s3 ls 
+```
+
+
+S3 issue - https://github.com/apache/airflow/discussions/26979#discussioncomment-3928659
+
+add to run chmod 777 airflow-logs
