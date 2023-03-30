@@ -91,7 +91,39 @@ services:
     environment: *airflow_environment
     command: scheduler
 
-  
+
+  locals3:
+    image: minio/minio
+    container_name: s3-minio
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    env_file:
+      - ./s3_minio/.env.local
+    command: server --console-address ":9001" /data
+    volumes:
+      - locals3-data:/s3_minio/data
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:9000/minio/health/live" ]
+      interval: 30s
+      timeout: 20s
+      retries: 3
+
+  locals3_init:
+    build: 
+      context: ./s3_minio
+      dockerfile: DockerFile
+    env_file:
+      - ./s3_minio/.env.local
+    environment:
+      - USER=user
+      - COPY_DIR=false
+      - INPUT_BUCKETS=datasets
+    depends_on:
+      - locals3
+    entrypoint: /bin/sh ./entrypoint.sh
+
 volumes:
   logs:
   postgres-db:
+  locals3-data:
