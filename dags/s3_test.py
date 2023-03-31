@@ -14,50 +14,19 @@ from airflow.providers.amazon.aws.hooks.s3 import S3Hook
 # Change these to your identifiers, if needed.
 AWS_S3_CONN_ID = "dev_s3"
 
-
+# Troubleshooting mino issues with S3
+# https://github.com/apache/airflow/discussions/26979#discussioncomment-3928659
 
 def s3_extract():
-#    source_s3_key = "user"
    source_s3_bucket = "datalake"
    hook = S3Hook(aws_conn_id=AWS_S3_CONN_ID)
    
-
-   keys = hook.list_keys(source_s3_bucket, prefix='test')
-   print(keys)
+   b_url = 's3://datalake'
+   parsed_loc = hook.parse_s3_url(b_url)[0]
+   result = hook.check_for_bucket(parsed_loc)
+   print(f'$"s3 bucket "{source_s3_bucket}" exists: {result}')
    
 
-
-
-
-cid = "dev_s3"                       # the airflow connection id
-b_url = 's3://datalake'   # remote_base_log_folder
-
-hook = S3Hook(cid, transfer_config_args={
-    'use_threads': False,
-})
-
-parsed_loc = hook.parse_s3_url(b_url)[0]
-# 'airflow-logs-dev'
-b, k = hook.parse_s3_url(b_url)
-# b == 'airflow-logs-dev', k == 'logs'
-#hook.get_s3_bucket_key('airflow-logs-dev', 'logs', b, k)
-# ('airflow-logs-dev', 'logs')
-
-hook.check_for_bucket(parsed_loc)  # parsed_loc == 'airflow-logs-dev'
-# [2022-10-20T16:28:15.808+0000] {base.py:71} INFO - Using connection ID 'amazon_s3' for task execution.
-# [2022-10-20T16:28:15.868+0000] {connection_wrapper.py:306} INFO -
-#       AWS Connection (conn_id='amazon_s3', conn_type='aws') credentials retrieved from extra.
-# True
-hook.check_for_bucket(b)
-# True
-hook.check_for_bucket(k)
-# [2022-10-20T16:31:37.605+0000] {s3.py:223} ERROR - Bucket "logs" does not exist
-# False
-# Expected - k is a key, not a bucket
-
-print(hook.list_keys(b))
-# ['hello.txt'] -- only if you uploaded the file like in the comment above and that's all that's in there
-   	 
 with DAG(
 	dag_id="s3_extract",
 	start_date=datetime(2022, 2, 12),
@@ -68,5 +37,4 @@ with DAG(
   t1 = PythonOperator(
     	task_id="s3_extract_task",
     	python_callable=s3_extract)
-   	 
   t1

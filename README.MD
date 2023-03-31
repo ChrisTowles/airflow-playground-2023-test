@@ -8,12 +8,12 @@ This is a playground for Apache Airflow. The goal is to get more deep understand
 
 - [x] Airflow docker starting
 - [x] Postgres Database started
-- [x] Create a DAG that runs a bash function
-- [ ] Create a DAG that runs a Python function
+- [x] Create a DAG that runs a Python function
 - [ ] Create a DAG that reads table in Postgres
-- [ ] Mock S3 with Minio or localstack
+- [x] Mock S3 with Minio or localstack
+- [x] create connection to S3
+- [x] create connection to postgres
 - [ ] Create a DAG that reads table in Postgres and outputs to S3
-
 
 ## Pre-requisites
 
@@ -94,10 +94,15 @@ aws configure set default.s3.signature_version s3v4 --profile locals3
 aws --profile locals3 --endpoint-url http://localhost:9000 s3 ls 
 
 # Note the IP may and is differnt from inside the docker containsers
-aws --profile locals3 --endpoint-url http://172.18.0.2:9000 s3 ls 
+aws --profile locals3 --endpoint-url http://locals3:9000 s3 ls 
 ```
 
+To connect to an interactive shell in the docker container
+
+```bash
+docker compose exec webserver bash
+```
 
 S3 issue - https://github.com/apache/airflow/discussions/26979#discussioncomment-3928659
 
-add to run chmod 777 airflow-logs
+add to run `chmod 777 airflow-logs` to fix permission issue
