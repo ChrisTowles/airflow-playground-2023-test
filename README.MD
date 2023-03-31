@@ -8,12 +8,19 @@ This is a playground for Apache Airflow. The goal is to get more deep understand
 
 - [x] Airflow docker starting
 - [x] Postgres Database started
+- [x] create connection to Postgres
 - [x] Create a DAG that runs a Python function
 - [x] Create a DAG that reads table in Postgres
-- [x] Mock S3 with Minio or localstack
+- [x] Mock S3 with Minio
 - [x] create connection to S3
-- [x] create connection to postgres
+- [x] create a DAG that touches S3
 - [x] Create a DAG that reads table in Postgres and outputs to S3
+- [ ] Create a DAG that does CDC from Postgres to S3
+- [ ] Create a DAG that does S3 to Postgres
+- [ ] Create a DAG that reads table in Postgres to Parquet and outputs to S3
+- [ ] Create a DAG that reads table s3 files in Parquet and outputs to Postgres
+- [ ] Example using Hooks to pass from operator to operator
+- [ ] Example Using datasets to trigger DAGs
 
 ## Pre-requisites
 
@@ -108,3 +115,4 @@ S3 issue - https://github.com/apache/airflow/discussions/26979#discussioncomment
 add to run `chmod 777 airflow-logs` to fix permission issue
 
 - [S3 to Redshift](https://airflow.apache.org/docs/apache-airflow-providers-amazon/1.0.0/_modules/airflow/providers/amazon/aws/example_dags/example_s3_to_redshift.html)
+- [Example of sql to file](https://gist.github.com/ganapathichidambaram/b9eaa8822066e5f50ed1cd032bc97aac)
