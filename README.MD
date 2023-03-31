@@ -9,11 +9,11 @@ This is a playground for Apache Airflow. The goal is to get more deep understand
 - [x] Airflow docker starting
 - [x] Postgres Database started
 - [x] Create a DAG that runs a Python function
-- [ ] Create a DAG that reads table in Postgres
+- [x] Create a DAG that reads table in Postgres
 - [x] Mock S3 with Minio or localstack
 - [x] create connection to S3
 - [x] create connection to postgres
-- [ ] Create a DAG that reads table in Postgres and outputs to S3
+- [x] Create a DAG that reads table in Postgres and outputs to S3
 
 ## Pre-requisites
 
@@ -106,3 +106,5 @@ docker compose exec webserver bash
 S3 issue - https://github.com/apache/airflow/discussions/26979#discussioncomment-3928659
 
 add to run `chmod 777 airflow-logs` to fix permission issue
+
+- [S3 to Redshift](https://airflow.apache.org/docs/apache-airflow-providers-amazon/1.0.0/_modules/airflow/providers/amazon/aws/example_dags/example_s3_to_redshift.html)
