@@ -1,4 +1,4 @@
-# Airflow Playground
+# Airflow Playground 2023 test
 
 
 This is a playground for Apache Airflow. The goal is to get more deep understanding of Airflow and its capabilities. I've played with Airflow in the past, but goal here is to get more hands-on experience with it.
